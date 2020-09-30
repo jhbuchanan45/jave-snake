@@ -3,8 +3,8 @@ package com.jacob;
 public class Snake {
     private int x[];
     private int y[];
-    private final int START_X = 20;
-    private final int START_Y = 20;
+    private final int START_X = 10;
+    private final int START_Y = 10;
 
     // 0 is up, 1 is left, 2 is right, 3 is down
     private int head_dir = 0;
@@ -29,9 +29,9 @@ public class Snake {
         y = new int [grid_number];
         y[0] = START_Y;
 
-        for (int i = 1; i < (snake_length - 1); i++) {
-            x[i] = START_X+i+1;
-            y[i] = START_Y+i+1;
+        for (int i = 1; i < (snake_length); i++) {
+            x[i] = START_X;
+            y[i] = START_Y+i;
         }
     }
 

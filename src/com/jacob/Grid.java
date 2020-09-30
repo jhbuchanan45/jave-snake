@@ -25,7 +25,7 @@ public class Grid extends JPanel implements ActionListener {
     private Snake snake;
     private Apple apple;
     private int Score = 0;
-    private boolean gameOver = false;
+    private boolean gameOver;
 
 //    private Image bodyI;
 //    private Image headI;
@@ -40,6 +40,11 @@ public class Grid extends JPanel implements ActionListener {
 
         // processes keyboard presses
         addKeyListener(new TAdaptor());
+
+        //ensure game starts with correct parameters
+        gameOver = false;
+        Score = 0;
+
 
         // sets some jFrame properties
         setBackground(Color.black);
@@ -92,8 +97,8 @@ public class Grid extends JPanel implements ActionListener {
         if (checkCollisions()) {
             gameOver = true;
             timer.stop(); //stop timer
-            System.out.println("GAME OVER!");
             repaint(); //with the gameOver flag set to true this will draw the game over screen
+
         }
     }
 
@@ -110,7 +115,7 @@ public class Grid extends JPanel implements ActionListener {
         int snakeX[] = snake.getX();
         int snakeY[] = snake.getY();
 
-        for (int i = 0; i < snake.getSnake_length(); i++) {
+        for (int i = 1; i < snake.getSnake_length(); i++) {
             if (headX == snakeX[i]) {
                 if (headY == snakeY[i]) {
                     return true;
@@ -209,9 +214,11 @@ public class Grid extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+
         //update game state when key pressed
         move();
         repaint();
+
     }
 
     private class TAdaptor extends KeyAdapter {
@@ -220,6 +227,12 @@ public class Grid extends JPanel implements ActionListener {
         @Override
         public void keyPressed(KeyEvent e) {
             int key = e.getKeyCode();
+
+            //restart game if in gameOver state
+            if (gameOver) {
+                initGrid();
+                System.out.println("Restarting!");
+            }
 
             //match key to head direction
             switch (key) {
